@@ -108,7 +108,11 @@ export const DetailMovieTemplate = ({
 
           <div className="flex flex-row gap-4">
             {/* ACTION BUTTON */}
-            {trailer?.key && <WatchTrailerAction youtubeKey={trailer.key} />}
+            {trailer?.key && (
+              <div className="lg:w-[220px]">
+                <WatchTrailerAction youtubeKey={trailer.key} />
+              </div>
+            )}
 
             {/* FAVORITE BUTTON */}
             <FavoriteButton movieId={movie.id} />

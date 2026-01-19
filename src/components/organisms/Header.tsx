@@ -83,12 +83,18 @@ const Header = () => {
             {/* Desktop Menu */}
             <ul className="hidden lg:flex items-center gap-12">
               <li>
-                <a href="/" className="text-md text-white no-underline">
+                <a
+                  href="/"
+                  className="text-md text-white no-underline hover:text-primary-300"
+                >
                   Home
                 </a>
               </li>
               <li>
-                <a href="/favorite" className="text-md text-white no-underline">
+                <a
+                  href="/favorite"
+                  className="text-md text-white no-underline hover:text-primary-300"
+                >
                   Favorites
                 </a>
               </li>

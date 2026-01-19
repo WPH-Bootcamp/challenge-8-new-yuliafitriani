@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { PopularMovies } from "../../api/movies/popular.api";
 
-
 type Props = {
   popularMovies: PopularMovies;
 };
@@ -10,7 +9,8 @@ export const PopularMovieCard = ({ popularMovies }: Props) => {
   const navigate = useNavigate();
   return (
     <div
-      className="block w-43.25 lg:w-[216px]"
+      className="block w-43.25 lg:w-[216px] transform transition duration-300
+    hover:scale-102 cursor-pointer"
       onClick={() => navigate(`/movie/${popularMovies.id}`)}
     >
       <img

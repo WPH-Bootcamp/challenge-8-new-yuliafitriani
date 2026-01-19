@@ -2,7 +2,7 @@ import type { PopularMovies } from "../../api/movies/popular.api";
 import { Loader } from "../atoms/Loader";
 import { ErrorState } from "../atoms/ErrorState";
 import { PopularMovieList } from "../organisms/PopularMovieList";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { ChevronRight } from "lucide-react";
 
 type Props = {
@@ -23,12 +23,36 @@ export const PopularMoviesTemplate = ({
   onRetry,
 }: Props) => {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<number | null>(null);
 
   const scrollRight = () => {
-    sliderRef.current?.scrollBy({
-      left: 320,
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    const isAtEnd =
+      slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10;
+
+    slider.scrollTo({
+      left: isAtEnd ? 0 : slider.scrollLeft + 320,
       behavior: "smooth",
     });
+  };
+
+  // ▶️ Auto slide
+  useEffect(() => {
+    intervalRef.current = setInterval(scrollRight, 3000);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  const pauseAutoSlide = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+  };
+
+  const resumeAutoSlide = () => {
+    intervalRef.current = setInterval(scrollRight, 3000);
   };
 
   if (isLoading) return <Loader />;
@@ -50,6 +74,8 @@ export const PopularMoviesTemplate = ({
       {/* Slider */}
       <div
         ref={sliderRef}
+        onMouseEnter={pauseAutoSlide}
+        onMouseLeave={resumeAutoSlide}
         className="
           flex gap-6 overflow-x-auto
           scroll-smooth scrollbar-hide
@@ -59,7 +85,7 @@ export const PopularMoviesTemplate = ({
         <PopularMovieList popularMovies={popularMovies ?? []} />
       </div>
 
-      {/* Right Arrow */}
+      {/* Manual right arrow */}
       <button
         onClick={scrollRight}
         className="

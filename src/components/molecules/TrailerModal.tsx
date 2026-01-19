@@ -9,7 +9,7 @@ export const TrailerModal = ({ youtubeKey, onClose }: Props) => {
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/80">
       {/* VIDEO */}
-      <div className="w-full max-w-[50%] aspect-video rounded-xl overflow-hidden">
+      <div className="w-full px-4 lg:max-w-[50%] aspect-video rounded-xl overflow-hidden">
         {/* CLOSE BUTTON */}
         <button
           onClick={onClose}

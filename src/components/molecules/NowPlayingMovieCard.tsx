@@ -9,7 +9,8 @@ export const NowPlayingMovieCard = ({ nowPlayingMovies }: Props) => {
   const navigate = useNavigate();
   return (
     <div
-      className="w-43.25 lg:w-[216px]"
+      className="w-43.25 lg:w-[216px] transform transition duration-300
+    hover:scale-105 cursor-pointer"
       onClick={() => navigate(`/movie/${nowPlayingMovies.id}`)}
     >
       <img
