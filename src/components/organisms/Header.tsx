@@ -1,11 +1,13 @@
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu, X, ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const onScroll = () => {
@@ -15,6 +17,50 @@ const Header = () => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && search.trim()) {
+      navigate(`/search?q=${encodeURIComponent(search.trim())}`);
+      setMobileSearchOpen(false);
+      setSearch("");
+    }
+  };
+
+  /* ================= MOBILE SEARCH OVERLAY ================= */
+  {
+    /* Overlay Layer */
+  }
+  if (mobileSearchOpen) {
+    return (
+      <div className="fixed inset-0 z-[100] bg-black lg:hidden">
+        {/* Header */}
+        <div className="flex h-16 items-center gap-4 px-4">
+          <button onClick={() => setMobileSearchOpen(false)} aria-label="Back">
+            <ArrowLeft className="h-6 w-6 text-white" />
+          </button>
+
+          <div className="flex h-11 flex-1 items-center gap-2 rounded-xl border border-[#252B37] bg-black/60 px-4 backdrop-blur-[20px]">
+            <Search className="h-5 w-5 text-[#717680]" />
+            <input
+              autoFocus
+              type="text"
+              placeholder="Search Movie"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={handleSearchKeyDown}
+              className="w-full bg-transparent text-sm text-white outline-none placeholder:text-[#717680]"
+            />
+          </div>
+        </div>
+
+        {/* Optional Content (Suggestions / Recent) */}
+        <div className="px-4 pt-4 text-sm text-gray-400">
+          Start typing to search movies
+        </div>
+      </div>
+    );
+  }
+  /* ========================================================= */
 
   return (
     <>
@@ -30,7 +76,7 @@ const Header = () => {
             <img
               src="./src/assets/images/logo.svg"
               alt="Movie Logo"
-              className="h-8"
+              className="h-8 cursor-pointer"
               onClick={() => navigate("/")}
             />
 
@@ -57,12 +103,19 @@ const Header = () => {
               <input
                 type="text"
                 placeholder="Search movie"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={handleSearchKeyDown}
                 className="w-full bg-transparent text-sm outline-none placeholder:text-gray-400"
               />
             </div>
 
             {/* Mobile Search Icon */}
-            <button className="lg:hidden" aria-label="Search">
+            <button
+              className="lg:hidden"
+              aria-label="Search"
+              onClick={() => setMobileSearchOpen(true)}
+            >
               <Search className="h-6 w-6" />
             </button>
 
@@ -87,20 +140,16 @@ const Header = () => {
               alt="Movie Logo"
               className="h-8"
             />
-            <button onClick={() => setOpen(false)} aria-label="Close">
+            <button onClick={() => setOpen(false)}>
               <X className="h-6 w-6" />
             </button>
           </div>
 
-          <nav className="flex flex-col items-start pt-6 px-4 gap-4 h-[calc(100vh-64px)] text-md text-left">
-            <a href="/" onClick={() => setOpen(false)} className="text-left">
+          <nav className="flex flex-col gap-4 px-4 pt-6">
+            <a href="/" onClick={() => setOpen(false)}>
               Home
             </a>
-            <a
-              href="/favorite"
-              onClick={() => setOpen(false)}
-              className="text-left"
-            >
+            <a href="/favorite" onClick={() => setOpen(false)}>
               Favorites
             </a>
           </nav>

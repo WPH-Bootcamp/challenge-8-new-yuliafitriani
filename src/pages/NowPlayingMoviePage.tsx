@@ -2,14 +2,19 @@ import { NowPlayingMoviesTemplate } from "../components/templates/NowPlayingMovi
 import { useNowPlayingMovies } from "../hooks/useNowPlayingMovies";
 
 const NowPlayingMoviesPage = () => {
-  const query = useNowPlayingMovies({ page: 1 });
+  const query = useNowPlayingMovies();
+
+  const movies = query.data?.pages.flat() ?? [];
+
   return (
     <NowPlayingMoviesTemplate
       title="New Release"
-      nowPlayingMovies={query.data}
+      nowPlayingMovies={movies}
       isLoading={query.isLoading}
       isFetching={query.isFetching}
       isError={query.isError}
+      isLoadingMore={query.isFetchingNextPage}
+      onLoadMore={() => query.fetchNextPage()}
       onRetry={() => query.refetch()}
     />
   );

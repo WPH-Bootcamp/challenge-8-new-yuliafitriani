@@ -60,7 +60,7 @@ const Hero = () => {
             Watch Trailer ▶
           </button>
           <button
-            onClick={() => navigate(`/movie/334280`)}
+            onClick={() => navigate(`/movie/950396`)}
             type="button"
             className="
             p-2

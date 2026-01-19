@@ -216,13 +216,13 @@ export const DetailMovieTemplate = ({
         </p>
       </div>
 
-      <div className="flex flex-col gap-4 text-left lg:flex-col-3">
+      <div className="flex flex-col gap-4 text-left">
         <h2 className="text-[20px] font-bold text-white text-left">
           Cast & Crew
         </h2>
-        <CastDetailMovieList casts={casts ?? []} />
-
-        {/* Add more CastCard items here */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <CastDetailMovieList casts={casts ?? []} />
+        </div>
       </div>
     </section>
   );

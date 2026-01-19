@@ -7,6 +7,7 @@ import PopularMoviesPage from "./pages/PopularMoviePage";
 import NowPlayingMoviesPage from "./pages/NowPlayingMoviePage";
 import DetailMoviePage from "./pages/DetailMoviePage";
 import FavoriteMoviesPage from "./pages/FavoriteMoviesPage";
+import SearchMoviesPage from "./pages/SearchMoviePage";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
 
         <Route path="/movie/:id" element={<DetailMoviePage />} />
         <Route path="/favorite" element={<FavoriteMoviesPage />} />
+        <Route path="/search" element={<SearchMoviesPage />} />
       </Routes>
       <Footer />
     </>

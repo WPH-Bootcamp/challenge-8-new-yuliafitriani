@@ -1,20 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import {
   nowPlayingMoviesQueryKey,
   nowPlayingMoviesListQueryFn,
 } from "../queries/movies/nowPlaying.query";
 
-export type UseNowPlayingMoviesOptions = {
-  page?: number;
-};
-
-export const useNowPlayingMovies = (
-  options: UseNowPlayingMoviesOptions = {}
-) => {
-  const { page } = options;
-
-  return useQuery({
-    queryKey: nowPlayingMoviesQueryKey.list({ page }),
+export const useNowPlayingMovies = () => {
+  return useInfiniteQuery({
+    queryKey: nowPlayingMoviesQueryKey.list(),
     queryFn: nowPlayingMoviesListQueryFn,
+    initialPageParam: 1,
+    getNextPageParam: (_lastPage, pages) => pages.length + 1,
   });
 };
