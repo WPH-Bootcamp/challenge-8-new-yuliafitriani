@@ -1,4 +1,5 @@
 import { apiClient } from "./axios";
+import { getMovieTrailer } from "./movies/trailer.api";
 
 export type FavoriteMovie = {
   id: number;
@@ -6,6 +7,7 @@ export type FavoriteMovie = {
   rating: number;
   posterPath: string;
   overview: string;
+  trailer?: string;
 };
 
 type TMDBFavoriteMovie = {
@@ -21,17 +23,26 @@ type GetFavoriteMoviesResponse = {
 };
 
 export const getFavoriteMovies = async (
-  accountId: number
+  accountId: number,
 ): Promise<FavoriteMovie[]> => {
   const res = await apiClient.get<GetFavoriteMoviesResponse>(
-    `/account/${accountId}/favorite/movies`
+    `/account/${accountId}/favorite/movies`,
   );
 
-  return res.data.results.map((movie) => ({
-    id: movie.id,
-    title: movie.title,
-    rating: movie.vote_average,
-    posterPath: movie.poster_path,
-    overview: movie.overview,
-  }));
+  const movies = await Promise.all(
+    res.data.results.map(async (movie) => {
+      const trailerKey = await getMovieTrailer(movie.id);
+
+      return {
+        id: movie.id,
+        title: movie.title,
+        rating: movie.vote_average,
+        posterPath: movie.poster_path,
+        overview: movie.overview,
+        trailer: trailerKey?.key,
+      };
+    }),
+  );
+
+  return movies;
 };

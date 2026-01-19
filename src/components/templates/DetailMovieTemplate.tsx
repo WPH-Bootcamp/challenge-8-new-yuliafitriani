@@ -1,11 +1,11 @@
 import { StatCard } from "../molecules/StatCard";
-import { Calendar, PlayCircle } from "iconsax-reactjs";
+import { Calendar } from "iconsax-reactjs";
 import { ErrorState } from "../atoms/ErrorState";
 import { Loader } from "../atoms/Loader";
 import { CastDetailMovieList } from "../organisms/CastDetailMovieList";
-import { useState } from "react";
-import { TrailerModal } from "../molecules/TrailerModal";
+// import { useState } from "react";
 import { FavoriteButton } from "../molecules/FavoriteButton";
+import WatchTrailerAction from "../molecules/WatchTrailerAction";
 
 type MovieDetail = {
   id: number;
@@ -55,7 +55,7 @@ export const DetailMovieTemplate = ({
   isError,
   onRetry,
 }: Props) => {
-  const [openTrailer, setOpenTrailer] = useState(false);
+  // const [openTrailer, setOpenTrailer] = useState(false);
   if (isLoading) return <Loader />;
 
   if (isError || !movie) {
@@ -108,30 +108,7 @@ export const DetailMovieTemplate = ({
 
           <div className="flex flex-row gap-4">
             {/* ACTION BUTTON */}
-            {trailer?.key && (
-              <>
-                <button
-                  onClick={() => setOpenTrailer(true)}
-                  className="
-            w-[220px] h-[52px]
-            rounded-full
-            bg-[#961200]
-            text-white font-semibold
-            flex items-center justify-center gap-2
-          "
-                >
-                  Watch Trailer
-                  <PlayCircle variant="Bold" className="h-5 w-5" />
-                </button>
-
-                {openTrailer && (
-                  <TrailerModal
-                    youtubeKey={trailer.key}
-                    onClose={() => setOpenTrailer(false)}
-                  />
-                )}
-              </>
-            )}
+            {trailer?.key && <WatchTrailerAction youtubeKey={trailer.key} />}
 
             {/* FAVORITE BUTTON */}
             <FavoriteButton movieId={movie.id} />
@@ -176,23 +153,7 @@ export const DetailMovieTemplate = ({
 
       {/* ACTION BUTTONS */}
       <div className="flex gap-4 lg:hidden">
-        {trailer?.key && (
-          <>
-            <button
-              onClick={() => setOpenTrailer(true)}
-              className="flex h-11 flex-1 items-center justify-center gap-2 rounded-full bg-[#961200] text-sm font-semibold text-white"
-            >
-              Watch Trailer <PlayCircle className="h-5 w-5" variant="Bold" />
-            </button>
-
-            {openTrailer && (
-              <TrailerModal
-                youtubeKey={trailer.key}
-                onClose={() => setOpenTrailer(false)}
-              />
-            )}
-          </>
-        )}
+        {trailer?.key && <WatchTrailerAction youtubeKey={trailer.key} />}
 
         <FavoriteButton movieId={movie.id} />
       </div>

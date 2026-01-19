@@ -1,4 +1,4 @@
-import { CloseCircle } from "iconsax-reactjs";
+import { CloseSquare } from "iconsax-reactjs";
 
 type Props = {
   youtubeKey: string;
@@ -7,14 +7,16 @@ type Props = {
 
 export const TrailerModal = ({ youtubeKey, onClose }: Props) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
-      {/* CLOSE BUTTON */}
-      <button onClick={onClose} className="absolute top-4 right-4 text-white">
-        <CloseCircle className="h-5 w-5" />
-      </button>
-
+    <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/80">
       {/* VIDEO */}
-      <div className="w-full max-w-[90%] aspect-video rounded-xl overflow-hidden">
+      <div className="w-full max-w-[50%] aspect-video rounded-xl overflow-hidden">
+        {/* CLOSE BUTTON */}
+        <button
+          onClick={onClose}
+          className="text-white z-50 w-full items-end justify-items-end"
+        >
+          <CloseSquare className="h-6 w-6" />
+        </button>
         <iframe
           src={`https://www.youtube.com/embed/${youtubeKey}?autoplay=1`}
           title="Movie Trailer"

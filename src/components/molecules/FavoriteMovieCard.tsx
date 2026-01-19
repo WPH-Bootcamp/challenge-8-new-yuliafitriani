@@ -1,15 +1,16 @@
-import { PlayCircle } from "iconsax-reactjs";
 import type { FavoriteMovie } from "../../api/favoriteMovies";
 import { FavoriteButton } from "../molecules/FavoriteButton";
+import WatchTrailerAction from "./WatchTrailerAction";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   movie: FavoriteMovie;
-  onPlay?: () => void;
   onToggleFavorite?: () => void;
   isFavorite?: boolean;
 };
 
-export const FavoriteMovieCard = ({ movie, onPlay }: Props) => {
+export const FavoriteMovieCard = ({ movie }: Props) => {
+  const navigate = useNavigate();
   return (
     <div
       className="
@@ -24,6 +25,7 @@ export const FavoriteMovieCard = ({ movie, onPlay }: Props) => {
           flex gap-4
           lg:gap-6 lg:w-[978px]
         "
+        onClick={() => navigate(`/movie/${movie.id}`)}
       >
         {/* Image */}
         <img
@@ -49,6 +51,7 @@ export const FavoriteMovieCard = ({ movie, onPlay }: Props) => {
               line-clamp-2 text-base font-bold leading-[30px] text-white
               lg:text-[24px] lg:leading-[36px]
             "
+            onClick={() => navigate(`/movie/${movie.id}`)}
           >
             {movie.title}
           </h3>
@@ -77,19 +80,8 @@ export const FavoriteMovieCard = ({ movie, onPlay }: Props) => {
           </p>
 
           {/* Actions (LG inline) */}
-          <div className="hidden lg:flex items-center gap-4">
-            <button
-              onClick={onPlay}
-              className="
-                flex h-[52px] w-[200px]
-                items-center justify-center gap-2
-                rounded-full bg-primary-300
-                text-base font-semibold text-white
-              "
-            >
-              Watch Trailer
-              <PlayCircle size={24} variant="Bold" />
-            </button>
+          <div className="hidden lg:flex items-center gap-4 lg:max-w-[220px]">
+            <WatchTrailerAction youtubeKey={movie.trailer} />
           </div>
         </div>
       </div>
@@ -97,24 +89,14 @@ export const FavoriteMovieCard = ({ movie, onPlay }: Props) => {
       {/* Right Actions */}
       <div
         className="
-          flex items-center gap-4
+          flex items-center gap-4 mt-4
           lg:flex-col lg:gap-0
         "
       >
         {/* Mobile Watch */}
-        <button
-          onClick={onPlay}
-          className="
-            flex h-11 flex-1 items-center justify-center gap-2
-            rounded-full bg-primary-300
-            text-sm font-semibold text-white
-            mt-4
-            lg:hidden
-          "
-        >
-          Watch Trailer
-          <PlayCircle size={18} variant="Bold" />
-        </button>
+        <div className="lg:hidden w-full ">
+          <WatchTrailerAction youtubeKey={movie.trailer} />
+        </div>
 
         {/* Favorite */}
         <FavoriteButton movieId={movie.id} />

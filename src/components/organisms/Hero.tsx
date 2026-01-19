@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+
+import WatchTrailerAction from "../molecules/WatchTrailerAction";
+
 const Hero = () => {
   const navigate = useNavigate();
   return (
@@ -41,40 +44,16 @@ const Hero = () => {
           </p>
         </div>
 
-        <div className="flex flex-col gap-4 w-full">
-          <button
-            type="button"
-            className="flex flex-row items-center justify-center
-            p-2
-            gap-2
-            h-11
-            bg-primary-300
-            rounded-full
-            flex-none
-            order-0
-            self-stretch
-            text-sm
-            font-semibold
-            z-2"
-          >
-            Watch Trailer ▶
-          </button>
+        <div className="grid grid-cols lg:grid-cols-2 gap-2 w-full">
+          <WatchTrailerAction youtubeKey="dpw1LDw9ABU" />
           <button
             onClick={() => navigate(`/movie/950396`)}
             type="button"
             className="
-            p-2
-            gap-2h-[44px]
-            bg-[rgba(10,13,18,0.6)]
-            border border-neutral-900
-            backdrop-blur-[20px]
-            rounded-full
-            flex-none
-            order-1
-            self-stretch
-            box-border
-            text-sm
-            font-semibold"
+              flex h-[52px] w-[220px] items-center justify-center gap-2
+              rounded-full
+              font-semibold text-white border border-neutral-900
+              w-full bg-[rgba(10,13,18,0.6)]"
           >
             See Detail
           </button>

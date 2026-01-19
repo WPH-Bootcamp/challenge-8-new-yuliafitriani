@@ -145,7 +145,7 @@ const Header = () => {
             </button>
           </div>
 
-          <nav className="flex flex-col gap-4 px-4 pt-6">
+          <nav className="flex flex-col gap-4 px-4 pt-6 text-left">
             <a href="/" onClick={() => setOpen(false)}>
               Home
             </a>
